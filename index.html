@@ -1,0 +1,1098 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mebel Jati Nusantara – Katalog AR</title>
+  <meta name="description" content="Katalog furnitur premium Mebel Jati Nusantara. Lihat produk langsung di ruangan Anda dengan teknologi Augmented Reality tanpa perlu menginstal aplikasi." />
+  <meta property="og:title" content="Mebel Jati Nusantara – Katalog AR" />
+  <meta property="og:description" content="Lihat furnitur langsung di ruangan Anda sebelum membeli." />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Model Viewer CDN -->
+  <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
+
+  <style>
+    /* ─── CSS Variables ─────────────────────────────── */
+    :root {
+      --cream:   #f9f5ef;
+      --cream2:  #f2ebe0;
+      --brown-d: #3b2a1a;
+      --brown-m: #7c5c3e;
+      --brown-l: #b48c6f;
+      --accent:  #c9843a;
+      --gold:    #d4a853;
+      --text:    #2c1f12;
+      --muted:   #8a7260;
+      --white:   #ffffff;
+      --shadow:  0 4px 24px rgba(60,35,10,.10);
+      --radius:  16px;
+      --font-head: 'Playfair Display', Georgia, serif;
+      --font-body: 'Nunito', sans-serif;
+    }
+
+    /* ─── Reset & Base ──────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      background: var(--cream);
+      color: var(--text);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { text-decoration: none; color: inherit; }
+    button { cursor: pointer; font-family: var(--font-body); border: none; }
+    img { max-width: 100%; display: block; }
+
+    /* ─── Top Nav ───────────────────────────────────── */
+    .navbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 20px;
+      background: rgba(249,245,239,.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(180,140,111,.18);
+    }
+    .navbar-logo {
+      font-family: var(--font-head);
+      font-size: 1.1rem;
+      color: var(--brown-d);
+      line-height: 1.1;
+    }
+    .navbar-logo span { display: block; font-size: .65rem; font-family: var(--font-body); color: var(--muted); font-weight: 600; letter-spacing: .08em; text-transform: uppercase; }
+    .navbar-wa {
+      background: #25D366; color: #fff;
+      padding: 8px 14px; border-radius: 50px;
+      font-size: .8rem; font-weight: 700;
+      display: flex; align-items: center; gap: 6px;
+      box-shadow: 0 2px 12px rgba(37,211,102,.3);
+    }
+    .navbar-wa svg { width: 16px; height: 16px; fill: #fff; }
+
+    /* ─── Hero ──────────────────────────────────────── */
+    .hero {
+      min-height: 100svh;
+      padding: 90px 24px 60px;
+      display: flex; flex-direction: column; justify-content: center;
+      position: relative; overflow: hidden;
+      background: linear-gradient(160deg, #f9f5ef 0%, #ecdfc9 100%);
+    }
+    .hero-grain {
+      position: absolute; inset: 0; pointer-events: none; opacity: .04;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 180px;
+    }
+    .hero-tag {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(201,132,58,.12); border: 1px solid rgba(201,132,58,.3);
+      color: var(--accent); border-radius: 50px;
+      font-size: .75rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+      padding: 6px 14px; margin-bottom: 24px; width: fit-content;
+    }
+    .hero-tag::before { content:''; width:8px; height:8px; border-radius:50%; background:var(--accent); animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(1.4)} }
+
+    .hero h1 {
+      font-family: var(--font-head);
+      font-size: clamp(2rem, 8vw, 3.4rem);
+      line-height: 1.15;
+      color: var(--brown-d);
+      margin-bottom: 16px;
+    }
+    .hero h1 em { color: var(--accent); font-style: normal; }
+    .hero p {
+      font-size: 1rem; line-height: 1.7; color: var(--muted);
+      margin-bottom: 36px; max-width: 480px;
+    }
+    .hero-btns { display: flex; flex-direction: column; gap: 12px; }
+    .btn-primary {
+      background: var(--brown-d); color: var(--white);
+      padding: 16px 28px; border-radius: 50px;
+      font-size: 1rem; font-weight: 700;
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      box-shadow: 0 6px 24px rgba(59,42,26,.25);
+      transition: transform .2s, box-shadow .2s;
+    }
+    .btn-primary:active { transform: scale(.97); }
+    .btn-secondary {
+      background: transparent; color: var(--brown-m);
+      padding: 15px 28px; border-radius: 50px;
+      font-size: 1rem; font-weight: 700;
+      border: 2px solid var(--brown-l);
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      transition: background .2s;
+    }
+    .btn-secondary:active { background: var(--cream2); }
+
+    .hero-visual {
+      margin-top: 48px;
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
+    }
+    .hero-card {
+      border-radius: 14px; overflow: hidden;
+      aspect-ratio: 3/4;
+      position: relative;
+    }
+    .hero-card:first-child { margin-top: 24px; }
+    .hero-card:nth-child(2) { margin-top: 0; }
+    .hero-card:last-child { margin-top: 40px; }
+    .hero-card-inner {
+      width: 100%; height: 100%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 3rem;
+      border-radius: 14px;
+    }
+
+    /* ─── Section Common ────────────────────────────── */
+    section { padding: 64px 20px; }
+    .section-label {
+      font-size: .7rem; font-weight: 700; letter-spacing: .12em;
+      text-transform: uppercase; color: var(--accent);
+      margin-bottom: 10px;
+    }
+    .section-title {
+      font-family: var(--font-head);
+      font-size: clamp(1.6rem, 5vw, 2.4rem);
+      color: var(--brown-d); line-height: 1.2;
+      margin-bottom: 12px;
+    }
+    .section-sub { color: var(--muted); line-height: 1.7; font-size: .95rem; }
+    .divider {
+      width: 48px; height: 3px; border-radius: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--gold));
+      margin: 16px 0 32px;
+    }
+
+    /* ─── How It Works ──────────────────────────────── */
+    .how-bg {
+      background: var(--brown-d);
+      padding: 64px 20px;
+    }
+    .how-bg .section-label { color: var(--gold); }
+    .how-bg .section-title { color: var(--white); }
+    .how-bg .section-sub { color: rgba(255,255,255,.6); }
+    .how-bg .divider { background: linear-gradient(90deg, var(--gold), var(--accent)); }
+
+    .steps { display: flex; flex-direction: column; gap: 20px; margin-top: 32px; }
+    .step {
+      display: flex; align-items: flex-start; gap: 16px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.09);
+      border-radius: var(--radius); padding: 20px;
+      animation: fadeUp .5s ease both;
+    }
+    .step:nth-child(1){animation-delay:.05s}
+    .step:nth-child(2){animation-delay:.15s}
+    .step:nth-child(3){animation-delay:.25s}
+    .step:nth-child(4){animation-delay:.35s}
+    @keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:none} }
+
+    .step-num {
+      width: 40px; height: 40px; flex-shrink: 0;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--gold));
+      color: #fff; font-weight: 800; font-size: .95rem;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .step-body h3 { color: #fff; font-size: .95rem; font-weight: 700; margin-bottom: 4px; }
+    .step-body p { color: rgba(255,255,255,.55); font-size: .85rem; line-height: 1.5; }
+
+    /* ─── Catalog Section ───────────────────────────── */
+    .catalog-header { margin-bottom: 28px; }
+    .search-bar {
+      display: flex; align-items: center; gap: 10px;
+      background: #fff; border: 1.5px solid rgba(180,140,111,.25);
+      border-radius: 50px; padding: 10px 18px;
+      box-shadow: var(--shadow); margin-bottom: 16px;
+    }
+    .search-bar svg { width: 18px; height: 18px; color: var(--muted); flex-shrink: 0; }
+    .search-bar input {
+      flex: 1; border: none; outline: none;
+      font-family: var(--font-body); font-size: .95rem;
+      background: transparent; color: var(--text);
+    }
+    .search-bar input::placeholder { color: var(--muted); }
+    .search-bar .clear-btn {
+      background: none; color: var(--muted); font-size: 1.2rem; padding: 0 4px; display: none;
+    }
+
+    .filters { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; }
+    .filters::-webkit-scrollbar { display: none; }
+    .filter-btn {
+      flex-shrink: 0; padding: 8px 16px; border-radius: 50px;
+      font-size: .82rem; font-weight: 700;
+      border: 1.5px solid rgba(180,140,111,.25);
+      background: #fff; color: var(--muted);
+      transition: all .18s;
+    }
+    .filter-btn.active {
+      background: var(--brown-d); color: #fff; border-color: var(--brown-d);
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+    .product-card {
+      background: #fff; border-radius: var(--radius);
+      overflow: hidden; box-shadow: var(--shadow);
+      cursor: pointer; transition: transform .2s, box-shadow .2s;
+      position: relative;
+    }
+    .product-card:active { transform: scale(.98); }
+    .product-card.hidden { display: none; }
+
+    .card-img {
+      aspect-ratio: 1;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 3.2rem; position: relative;
+      overflow: hidden;
+    }
+    .card-badge {
+      position: absolute; top: 10px; right: 10px;
+      background: var(--accent); color: #fff;
+      font-size: .65rem; font-weight: 800; letter-spacing: .05em;
+      text-transform: uppercase; padding: 4px 8px; border-radius: 6px;
+    }
+    .card-body { padding: 14px; }
+    .card-cat {
+      font-size: .68rem; font-weight: 700; letter-spacing: .08em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 4px;
+    }
+    .card-name {
+      font-family: var(--font-head); font-size: 1rem;
+      color: var(--brown-d); margin-bottom: 4px; line-height: 1.3;
+    }
+    .card-price { font-size: .95rem; font-weight: 800; color: var(--brown-m); margin-bottom: 12px; }
+    .card-ar-btn {
+      width: 100%; background: var(--brown-d); color: #fff;
+      padding: 10px; border-radius: 10px;
+      font-size: .82rem; font-weight: 700;
+      display: flex; align-items: center; justify-content: center; gap: 6px;
+      transition: background .18s;
+    }
+    .card-ar-btn:active { background: var(--brown-m); }
+
+    .no-results {
+      grid-column: 1/-1; text-align: center;
+      padding: 48px 20px; color: var(--muted);
+      display: none;
+    }
+    .no-results h3 { font-family: var(--font-head); font-size: 1.2rem; margin-bottom: 8px; }
+
+    /* ─── Product Modal ─────────────────────────────── */
+    .modal-overlay {
+      display: none; position: fixed; inset: 0; z-index: 200;
+      background: rgba(43,27,10,.7);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      overflow-y: auto; padding: 20px 0 80px;
+      animation: fadeIn .2s ease;
+    }
+    .modal-overlay.open { display: block; }
+    @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+
+    .modal {
+      background: var(--white); border-radius: 24px 24px 0 0;
+      position: absolute; bottom: 0; left: 0; right: 0;
+      animation: slideUp .3s cubic-bezier(.25,.8,.25,1);
+      max-height: 92svh; overflow-y: auto;
+    }
+    @keyframes slideUp { from{transform:translateY(60px);opacity:0} to{transform:none;opacity:1} }
+
+    .modal-handle {
+      width: 40px; height: 4px; border-radius: 2px;
+      background: rgba(180,140,111,.3); margin: 12px auto 0;
+    }
+    .modal-close {
+      position: absolute; top: 16px; right: 16px;
+      width: 36px; height: 36px; border-radius: 50%;
+      background: var(--cream2); color: var(--muted);
+      font-size: 1.2rem; display: flex; align-items: center; justify-content: center;
+      border: none;
+    }
+    .modal-img {
+      width: 100%; aspect-ratio: 1;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 6rem; background: var(--cream2);
+    }
+    .modal-content { padding: 20px 20px 32px; }
+    .modal-cat {
+      font-size: .7rem; font-weight: 800; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 8px;
+    }
+    .modal-name {
+      font-family: var(--font-head); font-size: 1.6rem;
+      color: var(--brown-d); margin-bottom: 6px; line-height: 1.2;
+    }
+    .modal-price { font-size: 1.3rem; font-weight: 800; color: var(--brown-m); margin-bottom: 16px; }
+    .modal-desc { font-size: .9rem; color: var(--muted); line-height: 1.7; margin-bottom: 20px; }
+
+    .specs { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin-bottom: 24px; }
+    .spec-item {
+      background: var(--cream2); border-radius: 12px;
+      padding: 12px 10px; text-align: center;
+    }
+    .spec-label { font-size: .65rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+    .spec-val { font-size: .82rem; font-weight: 700; color: var(--brown-d); line-height: 1.3; }
+
+    .modal-ar-section {
+      background: linear-gradient(135deg, var(--brown-d), #5a3d20);
+      border-radius: 16px; padding: 20px;
+      margin-bottom: 16px;
+    }
+    .modal-ar-title { color: #fff; font-weight: 700; font-size: .95rem; margin-bottom: 6px; }
+    .modal-ar-sub { color: rgba(255,255,255,.6); font-size: .82rem; margin-bottom: 16px; line-height: 1.5; }
+    .btn-ar {
+      width: 100%; padding: 14px;
+      background: linear-gradient(135deg, var(--accent), var(--gold));
+      color: #fff; border-radius: 12px;
+      font-size: 1rem; font-weight: 800;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+    .btn-ar svg { width: 20px; height: 20px; }
+
+    .btn-wa-modal {
+      width: 100%; padding: 14px;
+      background: #25D366; color: #fff;
+      border-radius: 12px; font-size: .95rem; font-weight: 700;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+
+    /* model-viewer inside modal */
+    .mv-container {
+      width: 100%; background: var(--cream2); position: relative;
+    }
+    .mv-container model-viewer {
+      width: 100%; height: 320px;
+    }
+    .mv-ar-hint {
+      text-align: center; font-size: .75rem; color: var(--muted);
+      padding: 8px; background: var(--cream);
+    }
+
+    /* ─── Materials Section ─────────────────────────── */
+    .materials-bg { background: var(--cream2); }
+    .material-list { display: flex; flex-direction: column; gap: 12px; margin-top: 24px; }
+    .material-item {
+      display: flex; align-items: center; gap: 14px;
+      background: #fff; border-radius: 14px; padding: 16px;
+      box-shadow: 0 2px 12px rgba(60,35,10,.06);
+    }
+    .material-icon {
+      width: 48px; height: 48px; border-radius: 12px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center; font-size: 1.6rem;
+    }
+    .material-name { font-weight: 800; color: var(--brown-d); font-size: .95rem; }
+    .material-desc { font-size: .82rem; color: var(--muted); line-height: 1.5; margin-top: 2px; }
+
+    /* ─── Testimonials ──────────────────────────────── */
+    .testi-scroll { display: flex; gap: 14px; overflow-x: auto; padding: 4px 0 12px; }
+    .testi-scroll::-webkit-scrollbar { display: none; }
+    .testi-card {
+      flex-shrink: 0; width: 260px;
+      background: #fff; border-radius: var(--radius);
+      padding: 20px; box-shadow: var(--shadow);
+    }
+    .testi-stars { color: var(--gold); font-size: 1rem; margin-bottom: 10px; }
+    .testi-text { font-size: .88rem; color: var(--muted); line-height: 1.6; margin-bottom: 14px; font-style: italic; }
+    .testi-author { font-weight: 800; font-size: .82rem; color: var(--brown-d); }
+    .testi-loc { font-size: .75rem; color: var(--muted); }
+
+    /* ─── Store Info ────────────────────────────────── */
+    .info-card {
+      background: #fff; border-radius: var(--radius);
+      padding: 20px; box-shadow: var(--shadow); margin-bottom: 14px;
+    }
+    .info-card h3 {
+      font-family: var(--font-head); font-size: 1.05rem;
+      color: var(--brown-d); margin-bottom: 12px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .info-card p, .info-card li {
+      font-size: .88rem; color: var(--muted);
+      line-height: 1.7;
+    }
+    .info-card ul { list-style: none; }
+    .info-card li { display: flex; justify-content: space-between; padding: 4px 0; }
+    .info-card li span:last-child { font-weight: 700; color: var(--brown-m); }
+
+    .map-placeholder {
+      width: 100%; height: 160px; border-radius: 14px;
+      background: linear-gradient(135deg, #e0d5c5, #c8b89a);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 8px; margin-top: 14px;
+      border: 2px dashed rgba(180,140,111,.4);
+    }
+    .map-placeholder span:first-child { font-size: 2.5rem; }
+    .map-placeholder span:last-child { font-size: .82rem; color: var(--muted); font-weight: 600; }
+
+    /* ─── Footer ────────────────────────────────────── */
+    footer {
+      background: var(--brown-d); color: rgba(255,255,255,.6);
+      padding: 40px 20px 100px;
+      text-align: center;
+    }
+    .footer-logo {
+      font-family: var(--font-head); color: #fff;
+      font-size: 1.4rem; margin-bottom: 6px;
+    }
+    .footer-tagline { font-size: .82rem; margin-bottom: 24px; }
+    .footer-divider { width: 40px; height: 2px; background: var(--accent); margin: 0 auto 20px; }
+    .footer-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px 20px; margin-bottom: 28px; }
+    .footer-links a { color: rgba(255,255,255,.55); font-size: .82rem; }
+    .footer-copy { font-size: .75rem; color: rgba(255,255,255,.3); }
+
+    /* ─── WhatsApp Float ────────────────────────────── */
+    .wa-float {
+      position: fixed; bottom: 24px; right: 20px; z-index: 150;
+      background: #25D366; color: #fff;
+      width: 56px; height: 56px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 20px rgba(37,211,102,.45);
+      transition: transform .2s;
+    }
+    .wa-float:active { transform: scale(.92); }
+    .wa-float svg { width: 28px; height: 28px; fill: #fff; }
+    .wa-pulse {
+      position: absolute; inset: -4px;
+      border-radius: 50%; border: 2px solid #25D366;
+      animation: waPulse 2s infinite;
+    }
+    @keyframes waPulse { 0%{opacity:.8;transform:scale(1)} 100%{opacity:0;transform:scale(1.6)} }
+
+    /* ─── AR Fallback Banner ────────────────────────── */
+    .ar-fallback {
+      background: var(--cream2); border-radius: 12px;
+      padding: 14px; margin-top: 12px;
+      border-left: 3px solid var(--gold);
+      display: none;
+    }
+    .ar-fallback p { font-size: .82rem; color: var(--muted); line-height: 1.6; }
+    .ar-fallback strong { color: var(--brown-m); }
+
+    /* ─── Scroll-reveal ─────────────────────────────── */
+    .reveal {
+      opacity: 0; transform: translateY(20px);
+      transition: opacity .5s ease, transform .5s ease;
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+  </style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════════════
+     NAV
+════════════════════════════════════════════════════ -->
+<nav class="navbar">
+  <div class="navbar-logo">
+    Mebel Jati Nusantara
+    <span>Furnitur Premium Indonesia</span>
+  </div>
+  <a href="https://wa.me/628123456789?text=Halo%2C%20saya%20ingin%20bertanya%20tentang%20produk%20mebel%20Anda." class="navbar-wa" target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    WhatsApp
+  </a>
+</nav>
+
+<!-- ════════════════════════════════════════════════════
+     HERO
+════════════════════════════════════════════════════ -->
+<section class="hero" id="beranda">
+  <div class="hero-grain"></div>
+
+  <div class="hero-tag">✦ Teknologi AR Terbaru</div>
+
+  <h1>Lihat Furnitur <em>Langsung</em><br>di Ruangan Anda</h1>
+  <p>Scan QR code di toko, buka katalog, lalu lihat produk mebel dalam Augmented Reality tanpa perlu menginstal aplikasi apapun.</p>
+
+  <div class="hero-btns">
+    <button class="btn-primary" onclick="scrollToCatalog()">
+      🪑 Jelajahi Produk
+    </button>
+    <a href="https://wa.me/628123456789?text=Halo%2C%20saya%20tertarik%20dengan%20produk%20mebel%20Anda." class="btn-secondary" target="_blank">
+      💬 Hubungi WhatsApp
+    </a>
+  </div>
+
+  <div class="hero-visual">
+    <div class="hero-card">
+      <div class="hero-card-inner" style="background:linear-gradient(135deg,#f0e6d3,#d9c9b0);">🪑</div>
+    </div>
+    <div class="hero-card">
+      <div class="hero-card-inner" style="background:linear-gradient(135deg,#e8dcc6,#c9b890);">🛋️</div>
+    </div>
+    <div class="hero-card">
+      <div class="hero-card-inner" style="background:linear-gradient(135deg,#ecdfd0,#d0b89a);">🪞</div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════
+     HOW IT WORKS
+════════════════════════════════════════════════════ -->
+<section class="how-bg reveal" id="cara-pakai">
+  <div class="section-label">Panduan Penggunaan</div>
+  <h2 class="section-title">Cara Menggunakan AR</h2>
+  <p class="section-sub">Hanya 4 langkah mudah untuk melihat furnitur impian Anda di ruangan sendiri.</p>
+  <div class="divider"></div>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <h3>Scan QR Code</h3>
+        <p>Scan QR code yang tersedia di label produk, poster, atau brosur toko kami.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <h3>Pilih Produk</h3>
+        <p>Telusuri katalog kami dan pilih furnitur yang ingin Anda lihat di ruangan.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <h3>Ketuk "Lihat di Ruangan Saya"</h3>
+        <p>Tekan tombol AR, lalu izinkan akses kamera pada browser Anda.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <h3>Arahkan Kamera ke Lantai</h3>
+        <p>Arahkan kamera ke lantai kosong, gerakkan perlahan, lalu ketuk untuk menempatkan furnitur.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════
+     CATALOG
+════════════════════════════════════════════════════ -->
+<section id="katalog">
+  <div class="section-label">Koleksi Kami</div>
+  <h2 class="section-title">Katalog Produk</h2>
+  <p class="section-sub">Temukan furnitur berkualitas tinggi dari kayu pilihan nusantara.</p>
+  <div class="divider"></div>
+
+  <!-- Search -->
+  <div class="catalog-header">
+    <div class="search-bar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input type="text" id="searchInput" placeholder="Cari kursi, meja, lemari..." oninput="filterProducts()" />
+      <button class="clear-btn" id="clearBtn" onclick="clearSearch()">✕</button>
+    </div>
+    <div class="filters">
+      <button class="filter-btn active" onclick="setFilter('Semua',this)">Semua</button>
+      <button class="filter-btn" onclick="setFilter('Kursi',this)">🪑 Kursi</button>
+      <button class="filter-btn" onclick="setFilter('Meja',this)">🪵 Meja</button>
+      <button class="filter-btn" onclick="setFilter('Lemari',this)">🚪 Lemari</button>
+      <button class="filter-btn" onclick="setFilter('Rak',this)">📚 Rak</button>
+      <button class="filter-btn" onclick="setFilter('Sofa',this)">🛋️ Sofa</button>
+      <button class="filter-btn" onclick="setFilter('Dekorasi',this)">🪴 Dekorasi</button>
+    </div>
+  </div>
+
+  <div class="product-grid" id="productGrid">
+    <!-- Cards injected by JS -->
+  </div>
+  <div class="no-results" id="noResults">
+    <h3>Produk tidak ditemukan</h3>
+    <p>Coba kata kunci lain atau pilih kategori berbeda.</p>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════
+     MATERIALS
+════════════════════════════════════════════════════ -->
+<section class="materials-bg reveal">
+  <div class="section-label">Bahan Baku</div>
+  <h2 class="section-title">Material Pilihan</h2>
+  <p class="section-sub">Setiap produk kami dibuat dari kayu berkualitas tinggi yang dipilih secara selektif.</p>
+  <div class="divider"></div>
+
+  <div class="material-list">
+    <div class="material-item">
+      <div class="material-icon" style="background:#f0e6d3;">🌳</div>
+      <div>
+        <div class="material-name">Kayu Jati</div>
+        <div class="material-desc">Raja kayu tropis Indonesia. Kuat, tahan lama, dan memiliki serat yang indah. Cocok untuk furnitur premium.</div>
+      </div>
+    </div>
+    <div class="material-item">
+      <div class="material-icon" style="background:#e8d8c8;">🪵</div>
+      <div>
+        <div class="material-name">Kayu Mahoni</div>
+        <div class="material-desc">Serat halus dengan warna kemerahan yang elegan. Ideal untuk lemari dan rak pajangan.</div>
+      </div>
+    </div>
+    <div class="material-item">
+      <div class="material-icon" style="background:#dde8d3;">🌿</div>
+      <div>
+        <div class="material-name">Kayu Sonokeling</div>
+        <div class="material-desc">Corak unik dengan warna gelap keunguan. Pilihan eksklusif untuk furnitur dekoratif mewah.</div>
+      </div>
+    </div>
+    <div class="material-item">
+      <div class="material-icon" style="background:#ece8d8;">✨</div>
+      <div>
+        <div class="material-name">Finishing Natural</div>
+        <div class="material-desc">Lapisan pelindung ramah lingkungan yang menonjolkan keindahan serat kayu asli.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════
+     TESTIMONIALS
+════════════════════════════════════════════════════ -->
+<section class="reveal">
+  <div class="section-label">Ulasan Pelanggan</div>
+  <h2 class="section-title">Apa Kata Mereka</h2>
+  <div class="divider"></div>
+
+  <div class="testi-scroll">
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">"Saya coba AR-nya langsung di rumah sebelum beli, ternyata kursinya pas banget di sudut ruang tamu. Puas!"</p>
+      <div class="testi-author">Budi Santoso</div>
+      <div class="testi-loc">📍 Solo, Jawa Tengah</div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">"Meja kopi industrial-nya keren banget. Teknologi AR-nya bikin saya yakin beli tanpa ragu. Pengiriman juga cepat!"</p>
+      <div class="testi-author">Sinta Rahayu</div>
+      <div class="testi-loc">📍 Yogyakarta</div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-stars">★★★★☆</div>
+      <p class="testi-text">"Lemarinya kokoh dan finishing-nya rapi. Fitur lihat di ruangan pakai HP sangat membantu. Recommended!"</p>
+      <div class="testi-author">Agus Prasetyo</div>
+      <div class="testi-loc">📍 Semarang</div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">"Sofanya empuk dan terlihat persis seperti di AR. Staff juga ramah dan sabar menjelaskan opsi bahan. Terima kasih!"</p>
+      <div class="testi-author">Dewi Lestari</div>
+      <div class="testi-loc">📍 Surakarta</div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════
+     STORE INFO
+════════════════════════════════════════════════════ -->
+<section class="reveal" id="toko">
+  <div class="section-label">Informasi Toko</div>
+  <h2 class="section-title">Temukan Kami</h2>
+  <div class="divider"></div>
+
+  <div class="info-card">
+    <h3>📍 Alamat</h3>
+    <p>Jl. Mebel Raya No. 45, Kelurahan Karangasem,<br>Kecamatan Laweyan, Solo 57145,<br>Jawa Tengah, Indonesia</p>
+    <div class="map-placeholder">
+      <span>🗺️</span>
+      <span>Klik untuk buka di Google Maps</span>
+    </div>
+  </div>
+
+  <div class="info-card">
+    <h3>🕐 Jam Operasional</h3>
+    <ul>
+      <li><span>Senin – Jumat</span><span>08.00 – 17.00</span></li>
+      <li><span>Sabtu</span><span>08.00 – 15.00</span></li>
+      <li><span>Minggu</span><span>Tutup</span></li>
+    </ul>
+  </div>
+
+  <div class="info-card">
+    <h3>📞 Kontak</h3>
+    <p>Telepon: <strong>+62 812-3456-789</strong><br>
+    Email: <strong>halo@mebeljatinusantara.id</strong><br>
+    Instagram: <strong>@mebeljatinusantara</strong></p>
+  </div>
+
+  <a href="https://wa.me/628123456789?text=Halo%20Mebel%20Jati%20Nusantara%2C%20saya%20ingin%20konsultasi%20produk."
+     class="btn-wa-modal" target="_blank" rel="noopener" style="display:flex;align-items:center;justify-content:center;gap:8px;margin-top:4px;">
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="#fff"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    Tanya via WhatsApp
+  </a>
+</section>
+
+<!-- ════════════════════════════════════════════════════
+     FOOTER
+════════════════════════════════════════════════════ -->
+<footer>
+  <div class="footer-logo">Mebel Jati Nusantara</div>
+  <p class="footer-tagline">Lihat furnitur langsung di ruangan Anda sebelum membeli</p>
+  <div class="footer-divider"></div>
+  <div class="footer-links">
+    <a href="#beranda">Beranda</a>
+    <a href="#katalog">Katalog</a>
+    <a href="#cara-pakai">Cara Pakai AR</a>
+    <a href="#toko">Info Toko</a>
+  </div>
+  <p class="footer-copy">© 2025 Mebel Jati Nusantara · Dibuat dengan ❤️ di Solo, Jawa Tengah</p>
+</footer>
+
+<!-- WhatsApp Float -->
+<a href="https://wa.me/628123456789?text=Halo%20Mebel%20Jati%20Nusantara%2C%20saya%20tertarik%20dengan%20produk%20furnitur%20Anda."
+   class="wa-float" target="_blank" rel="noopener" aria-label="Hubungi via WhatsApp">
+  <div class="wa-pulse"></div>
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.815 0 00-3.48-8.413z"/></svg>
+</a>
+
+<!-- ════════════════════════════════════════════════════
+     PRODUCT MODAL
+════════════════════════════════════════════════════ -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModalOutside(event)">
+  <div class="modal" id="modal" role="dialog" aria-modal="true" aria-label="Detail Produk">
+    <div class="modal-handle"></div>
+    <button class="modal-close" onclick="closeModal()" aria-label="Tutup">✕</button>
+
+    <!-- model-viewer / product visual -->
+    <div class="mv-container" id="mvContainer">
+      <!-- Injected by JS -->
+    </div>
+    <p class="mv-ar-hint" id="mvHint">Geser model untuk memutar · Ketuk ikon AR untuk mode AR</p>
+
+    <div class="modal-content">
+      <div class="modal-cat" id="mCat"></div>
+      <h2 class="modal-name" id="mName"></h2>
+      <div class="modal-price" id="mPrice"></div>
+      <p class="modal-desc" id="mDesc"></p>
+
+      <div class="specs" id="mSpecs">
+        <!-- Injected by JS -->
+      </div>
+
+      <div class="modal-ar-section">
+        <div class="modal-ar-title">📱 Lihat di Ruangan Anda</div>
+        <div class="modal-ar-sub">Tekan tombol di bawah, arahkan kamera ke lantai kosong, lalu gerakkan perlahan untuk menempatkan furnitur.</div>
+        <button class="btn-ar" id="modalArBtn" onclick="launchAR()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+            <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
+          </svg>
+          Lihat di Ruangan Saya
+        </button>
+        <div class="ar-fallback" id="arFallback">
+          <p><strong>AR tidak tersedia di browser ini.</strong><br>
+          Untuk pengalaman AR terbaik, gunakan Google Chrome (Android) atau Safari (iPhone/iPad). Pastikan Anda mengizinkan akses kamera.</p>
+        </div>
+      </div>
+
+      <a id="modalWaBtn" href="#" class="btn-wa-modal" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="#fff"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Tanya tentang Produk Ini
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════
+     JAVASCRIPT
+════════════════════════════════════════════════════ -->
+<script>
+// ─── Product Data ────────────────────────────────────
+const products = [
+  {
+    id: 1,
+    name: "Kursi Tamu Jati Minimalis",
+    price: "Rp 1.250.000",
+    category: "Kursi",
+    emoji: "🪑",
+    bg: "linear-gradient(135deg,#f0e6d3,#d9c9b0)",
+    badge: "Terlaris",
+    description: "Kursi jati solid dengan desain minimalis, cocok untuk ruang tamu modern dan tahan digunakan dalam jangka panjang.",
+    material: "Kayu jati solid",
+    finish: "Natural matte",
+    dimensions: "75 × 70 × 95 cm",
+    model_glb: "models/kursi-jati-minimalis.glb",
+    model_usdz: "models/kursi-jati-minimalis.usdz"
+  },
+  {
+    id: 2,
+    name: "Meja Kopi Kayu Industrial",
+    price: "Rp 980.000",
+    category: "Meja",
+    emoji: "🪵",
+    bg: "linear-gradient(135deg,#e8dcc6,#c9b890)",
+    badge: null,
+    description: "Meja kopi dengan kombinasi kayu dan aksen industrial yang memberikan tampilan hangat dan modern.",
+    material: "Kayu solid & rangka metal",
+    finish: "Dark walnut",
+    dimensions: "100 × 55 × 45 cm",
+    model_glb: "models/meja-kopi-industrial.glb",
+    model_usdz: "models/meja-kopi-industrial.usdz"
+  },
+  {
+    id: 3,
+    name: "Lemari Pajangan Serbaguna",
+    price: "Rp 2.400.000",
+    category: "Lemari",
+    emoji: "🚪",
+    bg: "linear-gradient(135deg,#e0d4c0,#c8b89a)",
+    badge: "Pilihan Editor",
+    description: "Lemari multifungsi untuk menyimpan dan memajang dekorasi, buku, atau koleksi pribadi dengan tampilan rapi.",
+    material: "Kayu mahoni",
+    finish: "Light oak",
+    dimensions: "120 × 40 × 180 cm",
+    model_glb: "models/lemari-pajangan-serbaguna.glb",
+    model_usdz: "models/lemari-pajangan-serbaguna.usdz"
+  },
+  {
+    id: 4,
+    name: "Rak Buku Dinding Modern",
+    price: "Rp 720.000",
+    category: "Rak",
+    emoji: "📚",
+    bg: "linear-gradient(135deg,#dde8d3,#b8c9a0)",
+    badge: null,
+    description: "Rak buku hemat ruang dengan desain modern yang cocok untuk ruang kerja, kamar tidur, atau ruang belajar.",
+    material: "Kayu engineered premium",
+    finish: "Natural wood",
+    dimensions: "80 × 25 × 160 cm",
+    model_glb: "models/rak-buku-modern.glb",
+    model_usdz: "models/rak-buku-modern.usdz"
+  },
+  {
+    id: 5,
+    name: "Sofa Dua Dudukan Premium",
+    price: "Rp 3.500.000",
+    category: "Sofa",
+    emoji: "🛋️",
+    bg: "linear-gradient(135deg,#ece8d8,#d4c9a8)",
+    badge: "Premium",
+    description: "Sofa dua dudukan dengan busa empuk dan desain elegan yang cocok untuk rumah bergaya modern minimalis.",
+    material: "Kayu rangka, busa premium, kain upholstery",
+    finish: "Beige soft",
+    dimensions: "160 × 85 × 90 cm",
+    model_glb: "models/sofa-dua-dudukan.glb",
+    model_usdz: "models/sofa-dua-dudukan.usdz"
+  },
+  {
+    id: 6,
+    name: "Meja Kerja Kayu Jati",
+    price: "Rp 1.850.000",
+    category: "Meja",
+    emoji: "🖥️",
+    bg: "linear-gradient(135deg,#f0e0c8,#d8b890)",
+    badge: null,
+    description: "Meja kerja ergonomis dengan tampilan hangat, cocok untuk kantor rumahan atau ruang belajar.",
+    material: "Kayu jati & lapisan pelindung",
+    finish: "Warm brown",
+    dimensions: "120 × 60 × 75 cm",
+    model_glb: "models/meja-kerja-jati.glb",
+    model_usdz: "models/meja-kerja-jati.usdz"
+  },
+  {
+    id: 7,
+    name: "Hiasan Dinding Kayu Ukir",
+    price: "Rp 450.000",
+    category: "Dekorasi",
+    emoji: "🪴",
+    bg: "linear-gradient(135deg,#e8e0d0,#c9b898)",
+    badge: null,
+    description: "Hiasan dinding berbahan kayu jati dengan ukiran motif nusantara. Sentuhan budaya lokal untuk ruang yang lebih hidup.",
+    material: "Kayu jati ukir",
+    finish: "Natural oiled",
+    dimensions: "60 × 5 × 40 cm",
+    model_glb: "models/hiasan-dinding-ukir.glb",
+    model_usdz: "models/hiasan-dinding-ukir.usdz"
+  },
+  {
+    id: 8,
+    name: "Kursi Makan Sonokeling",
+    price: "Rp 890.000",
+    category: "Kursi",
+    emoji: "🍽️",
+    bg: "linear-gradient(135deg,#d8ccb8,#b8a888)",
+    badge: "Baru",
+    description: "Kursi makan dari kayu sonokeling dengan warna gelap alami yang mewah. Eksklusif dan tahan lama.",
+    material: "Kayu sonokeling solid",
+    finish: "Dark natural",
+    dimensions: "45 × 50 × 90 cm",
+    model_glb: "models/kursi-makan-sonokeling.glb",
+    model_usdz: "models/kursi-makan-sonokeling.usdz"
+  }
+];
+
+// ─── State ───────────────────────────────────────────
+let activeFilter = 'Semua';
+let activeProduct = null;
+
+// ─── Render Cards ────────────────────────────────────
+function renderProducts(list) {
+  const grid = document.getElementById('productGrid');
+  const noRes = document.getElementById('noResults');
+  grid.innerHTML = '';
+
+  if (list.length === 0) {
+    noRes.style.display = 'block';
+    return;
+  }
+  noRes.style.display = 'none';
+
+  list.forEach(p => {
+    const card = document.createElement('div');
+    card.className = 'product-card';
+    card.setAttribute('data-id', p.id);
+    card.innerHTML = `
+      <div class="card-img" style="background:${p.bg};">
+        <span style="font-size:3.2rem;">${p.emoji}</span>
+        ${p.badge ? `<div class="card-badge">${p.badge}</div>` : ''}
+      </div>
+      <div class="card-body">
+        <div class="card-cat">${p.category}</div>
+        <div class="card-name">${p.name}</div>
+        <div class="card-price">${p.price}</div>
+        <button class="card-ar-btn" onclick="openModal(${p.id});event.stopPropagation()">
+          📐 Lihat di Ruangan Saya
+        </button>
+      </div>
+    `;
+    card.addEventListener('click', () => openModal(p.id));
+    grid.appendChild(card);
+  });
+}
+
+// ─── Filter Logic ────────────────────────────────────
+function getFiltered() {
+  const q = document.getElementById('searchInput').value.toLowerCase().trim();
+  return products.filter(p => {
+    const matchCat = activeFilter === 'Semua' || p.category === activeFilter;
+    const matchQ   = !q || p.name.toLowerCase().includes(q) || p.category.toLowerCase().includes(q);
+    return matchCat && matchQ;
+  });
+}
+
+function filterProducts() {
+  const clearBtn = document.getElementById('clearBtn');
+  clearBtn.style.display = document.getElementById('searchInput').value ? 'block' : 'none';
+  renderProducts(getFiltered());
+}
+
+function setFilter(cat, btn) {
+  activeFilter = cat;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderProducts(getFiltered());
+}
+
+function clearSearch() {
+  document.getElementById('searchInput').value = '';
+  document.getElementById('clearBtn').style.display = 'none';
+  renderProducts(getFiltered());
+}
+
+// ─── Modal ───────────────────────────────────────────
+function openModal(id) {
+  const p = products.find(x => x.id === id);
+  if (!p) return;
+  activeProduct = p;
+
+  document.getElementById('mCat').textContent   = p.category;
+  document.getElementById('mName').textContent  = p.name;
+  document.getElementById('mPrice').textContent = p.price;
+  document.getElementById('mDesc').textContent  = p.description;
+
+  // Specs
+  document.getElementById('mSpecs').innerHTML = `
+    <div class="spec-item">
+      <div class="spec-label">Material</div>
+      <div class="spec-val">${p.material}</div>
+    </div>
+    <div class="spec-item">
+      <div class="spec-label">Finishing</div>
+      <div class="spec-val">${p.finish}</div>
+    </div>
+    <div class="spec-item">
+      <div class="spec-label">Ukuran</div>
+      <div class="spec-val">${p.dimensions}</div>
+    </div>
+  `;
+
+  // model-viewer
+  const mvc = document.getElementById('mvContainer');
+  mvc.innerHTML = `
+    <model-viewer
+      src="${p.model_glb}"
+      ios-src="${p.model_usdz}"
+      alt="3D model ${p.name}"
+      ar
+      ar-modes="scene-viewer webxr quick-look"
+      ar-scale="auto"
+      camera-controls
+      auto-rotate
+      shadow-intensity="1"
+      exposure="0.8"
+      style="width:100%;height:300px;background:${p.bg};"
+      poster=""
+    >
+      <!-- Fallback when model doesn't load: show emoji -->
+      <div slot="poster" style="width:100%;height:300px;display:flex;align-items:center;justify-content:center;background:${p.bg};font-size:6rem;">${p.emoji}</div>
+    </model-viewer>
+  `;
+
+  // WhatsApp link
+  const msg = encodeURIComponent(`Halo Mebel Jati Nusantara, saya tertarik dengan produk *${p.name}* (${p.price}). Boleh saya tanya lebih lanjut?`);
+  document.getElementById('modalWaBtn').href = `https://wa.me/628123456789?text=${msg}`;
+
+  // AR fallback check
+  document.getElementById('arFallback').style.display = 'none';
+
+  document.getElementById('modalOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+  // Clean up model-viewer to stop 3D rendering
+  setTimeout(() => {
+    document.getElementById('mvContainer').innerHTML = '';
+  }, 300);
+}
+
+function closeModalOutside(e) {
+  if (e.target === document.getElementById('modalOverlay')) closeModal();
+}
+
+// ─── AR Launch ───────────────────────────────────────
+function launchAR() {
+  const mv = document.querySelector('#mvContainer model-viewer');
+  if (mv && mv.canActivateAR) {
+    mv.activateAR();
+  } else {
+    document.getElementById('arFallback').style.display = 'block';
+  }
+}
+
+// ─── Scroll helpers ──────────────────────────────────
+function scrollToCatalog() {
+  document.getElementById('katalog').scrollIntoView({ behavior: 'smooth' });
+}
+
+// ─── Scroll-reveal observer ──────────────────────────
+const revealObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+// ─── Keyboard close ──────────────────────────────────
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+// ─── Init ────────────────────────────────────────────
+renderProducts(products);
+</script>
+</body>
+</html>
