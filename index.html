@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mebel Jati Nusantara – Katalog AR</title>
+  <meta name="description" content="Katalog furnitur premium Mebel Jati Nusantara. Lihat produk langsung di ruangan Anda dengan teknologi Augmented Reality tanpa perlu menginstal aplikasi." />
+  <meta name="theme-color" content="#3b2a1a" />
+
+  <!-- Open Graph -->
+  <meta property="og:title"       content="Mebel Jati Nusantara – Katalog AR" />
+  <meta property="og:description" content="Lihat furnitur langsung di ruangan Anda sebelum membeli." />
+  <meta property="og:type"        content="website" />
+
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="manifest.json" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="styles.css" />
+
+  <!-- Model Viewer (module — must be before body scripts) -->
+  <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════════════
+     NAV
+════════════════════════════════════════════════════ -->
+<nav class="navbar">
+  <div class="navbar-logo">
+    Mebel Jati Nusantara
+    <span>Furnitur Premium Indonesia</span>
+  </div>
+  <a href="https://wa.me/628123456789?text=Halo%2C%20saya%20ingin%20bertanya%20tentang%20produk%20mebel%20Anda."
+     class="navbar-wa" target="_blank" rel="noopener" aria-label="Hubungi WhatsApp">
+    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    WhatsApp
+  </a>
+</nav>
+
+<!-- ════════════════════════════════════════════════════
+     HERO
+════════════════════════════════════════════════════ -->
+<section class="hero" id="beranda">
+  <div class="hero-grain"></div>
+
+  <div class="hero-tag">✦ Teknologi AR Terbaru</div>
+
+  <h1>Lihat Furnitur <em>Langsung</em><br>di Ruangan Anda</h1>
+  <p>Scan QR code di toko, buka katalog, lalu lihat produk mebel dalam Augmented Reality tanpa perlu menginstal aplikasi apapun.</p>
+
+  <div class="hero-btns">
+    <button class="btn-primary" onclick="scrollToCatalog()">
+      🪑 Jelajahi Produk
+    </button>
+    <a href="https://wa.me/628123456789?text=Halo%2C%20saya%20tertarik%20dengan%20produk%20mebel%20Anda."
+       class="btn-secondary" target="_blank" rel="noopener">
+      💬 Hubungi WhatsApp
+    </a>
+  </div>
+
+  <div class="hero-visual">
+    <div class="hero-card">
+      <div class="hero-card-inner" style="background:linear-gradient(135deg,#f0e6d3,#d9c9b0);">🪑</div>
+    </div>
+    <div class="hero-card">
+      <div class="hero-card-inner" style="background:linear-gradient(135deg,#e8dcc6,#c9b890);">🛋️</div>
+    </div>
+    <div class="hero-card">
+      <div class="hero-card-inner" style="background:linear-gradient(135deg,#ecdfd0,#d0b89a);">🪞</div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════
+     HOW IT WORKS
+════════════════════════════════════════════════════ -->
+<section class="how-bg reveal" id="cara-pakai">
+  <div class="section-label">Panduan Penggunaan</div>
+  <h2 class="section-title">Cara Menggunakan AR</h2>
+  <p class="section-sub">Hanya 4 langkah mudah untuk melihat furnitur impian Anda di ruangan sendiri.</p>
+  <div class="divider"></div>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <h3>Scan QR Code</h3>
+        <p>Scan QR code yang tersedia di label produk, poster, atau brosur toko kami.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <h3>Pilih Produk</h3>
+        <p>Telusuri katalog kami dan pilih furnitur yang ingin Anda lihat di ruangan.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <h3>Ketuk "Lihat di Ruangan Saya"</h3>
+        <p>Tekan tombol AR, lalu izinkan akses kamera pada browser Anda.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <h3>Arahkan Kamera ke Lantai</h3>
+        <p>Arahkan kamera ke lantai kosong, gerakkan perlahan, lalu ketuk untuk menempatkan furnitur.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════
+     CATALOG
+════════════════════════════════════════════════════ -->
+<section id="katalog">
+  <div class="section-label">Koleksi Kami</div>
+  <h2 class="section-title">Katalog Produk</h2>
+  <p class="section-sub">Temukan furnitur berkualitas tinggi dari kayu pilihan nusantara.</p>
+  <div class="divider"></div>
+
+  <!-- Search -->
+  <div class="catalog-header">
+    <div class="search-bar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input type="text" id="searchInput" placeholder="Cari kursi, meja, lemari..." oninput="filterProducts()" />
+      <button class="clear-btn" id="clearBtn" onclick="clearSearch()" aria-label="Hapus pencarian">✕</button>
+    </div>
+    <div class="filters" role="group" aria-label="Filter kategori">
+      <button class="filter-btn active" onclick="setFilter('Semua',this)">Semua</button>
+      <button class="filter-btn" onclick="setFilter('Kursi',this)">🪑 Kursi</button>
+      <button class="filter-btn" onclick="setFilter('Meja',this)">🪵 Meja</button>
+      <button class="filter-btn" onclick="setFilter('Lemari',this)">🚪 Lemari</button>
+      <button class="filter-btn" onclick="setFilter('Rak',this)">📚 Rak</button>
+      <button class="filter-btn" onclick="setFilter('Sofa',this)">🛋️ Sofa</button>
+      <button class="filter-btn" onclick="setFilter('Dekorasi',this)">🪴 Dekorasi</button>
+    </div>
+  </div>
+
+  <div class="product-grid" id="productGrid" role="list">
+    <!-- Cards injected by app.js -->
+  </div>
+  <div class="no-results" id="noResults" aria-live="polite">
+    <h3>Produk tidak ditemukan</h3>
+    <p>Coba kata kunci lain atau pilih kategori berbeda.</p>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════
+     MATERIALS
+════════════════════════════════════════════════════ -->
+<section class="materials-bg reveal">
+  <div class="section-label">Bahan Baku</div>
+  <h2 class="section-title">Material Pilihan</h2>
+  <p class="section-sub">Setiap produk kami dibuat dari kayu berkualitas tinggi yang dipilih secara selektif.</p>
+  <div class="divider"></div>
+
+  <div class="material-list">
+    <div class="material-item">
+      <div class="material-icon" style="background:#f0e6d3;">🌳</div>
+      <div>
+        <div class="material-name">Kayu Jati</div>
+        <div class="material-desc">Raja kayu tropis Indonesia. Kuat, tahan lama, dan memiliki serat yang indah. Cocok untuk furnitur premium.</div>
+      </div>
+    </div>
+    <div class="material-item">
+      <div class="material-icon" style="background:#e8d8c8;">🪵</div>
+      <div>
+        <div class="material-name">Kayu Mahoni</div>
+        <div class="material-desc">Serat halus dengan warna kemerahan yang elegan. Ideal untuk lemari dan rak pajangan.</div>
+      </div>
+    </div>
+    <div class="material-item">
+      <div class="material-icon" style="background:#dde8d3;">🌿</div>
+      <div>
+        <div class="material-name">Kayu Sonokeling</div>
+        <div class="material-desc">Corak unik dengan warna gelap keunguan. Pilihan eksklusif untuk furnitur dekoratif mewah.</div>
+      </div>
+    </div>
+    <div class="material-item">
+      <div class="material-icon" style="background:#ece8d8;">✨</div>
+      <div>
+        <div class="material-name">Finishing Natural</div>
+        <div class="material-desc">Lapisan pelindung ramah lingkungan yang menonjolkan keindahan serat kayu asli.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════
+     TESTIMONIALS
+════════════════════════════════════════════════════ -->
+<section class="reveal">
+  <div class="section-label">Ulasan Pelanggan</div>
+  <h2 class="section-title">Apa Kata Mereka</h2>
+  <div class="divider"></div>
+
+  <div class="testi-scroll">
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">"Saya coba AR-nya langsung di rumah sebelum beli, ternyata kursinya pas banget di sudut ruang tamu. Puas!"</p>
+      <div class="testi-author">Budi Santoso</div>
+      <div class="testi-loc">📍 Solo, Jawa Tengah</div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">"Meja kopi industrial-nya keren banget. Teknologi AR-nya bikin saya yakin beli tanpa ragu. Pengiriman juga cepat!"</p>
+      <div class="testi-author">Sinta Rahayu</div>
+      <div class="testi-loc">📍 Yogyakarta</div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-stars">★★★★☆</div>
+      <p class="testi-text">"Lemarinya kokoh dan finishing-nya rapi. Fitur lihat di ruangan pakai HP sangat membantu. Recommended!"</p>
+      <div class="testi-author">Agus Prasetyo</div>
+      <div class="testi-loc">📍 Semarang</div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">"Sofanya empuk dan terlihat persis seperti di AR. Staff juga ramah dan sabar menjelaskan opsi bahan. Terima kasih!"</p>
+      <div class="testi-author">Dewi Lestari</div>
+      <div class="testi-loc">📍 Surakarta</div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════
+     STORE INFO
+════════════════════════════════════════════════════ -->
+<section class="reveal" id="toko">
+  <div class="section-label">Informasi Toko</div>
+  <h2 class="section-title">Temukan Kami</h2>
+  <div class="divider"></div>
+
+  <div class="info-card">
+    <h3>📍 Alamat</h3>
+    <p>Jl. Mebel Raya No. 45, Kelurahan Karangasem,<br>Kecamatan Laweyan, Solo 57145,<br>Jawa Tengah, Indonesia</p>
+    <div class="map-placeholder" onclick="openMaps()" role="button" tabindex="0" aria-label="Buka di Google Maps">
+      <span>🗺️</span>
+      <span>Ketuk untuk buka di Google Maps</span>
+    </div>
+  </div>
+
+  <div class="info-card">
+    <h3>🕐 Jam Operasional</h3>
+    <ul>
+      <li><span>Senin – Jumat</span><span>08.00 – 17.00</span></li>
+      <li><span>Sabtu</span><span>08.00 – 15.00</span></li>
+      <li><span>Minggu</span><span>Tutup</span></li>
+    </ul>
+  </div>
+
+  <div class="info-card">
+    <h3>📞 Kontak</h3>
+    <p>Telepon: <strong>+62 812-3456-789</strong><br>
+    Email: <strong>halo@mebeljatinusantara.id</strong><br>
+    Instagram: <strong>@mebeljatinusantara</strong></p>
+  </div>
+
+  <a href="https://wa.me/628123456789?text=Halo%20Mebel%20Jati%20Nusantara%2C%20saya%20ingin%20konsultasi%20produk."
+     class="btn-wa-modal" target="_blank" rel="noopener" style="margin-top:4px;">
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="#fff"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    Tanya via WhatsApp
+  </a>
+</section>
+
+<!-- ════════════════════════════════════════════════════
+     FOOTER
+════════════════════════════════════════════════════ -->
+<footer>
+  <div class="footer-logo">Mebel Jati Nusantara</div>
+  <p class="footer-tagline">Lihat furnitur langsung di ruangan Anda sebelum membeli</p>
+  <div class="footer-divider"></div>
+  <div class="footer-links">
+    <a href="#beranda">Beranda</a>
+    <a href="#katalog">Katalog</a>
+    <a href="#cara-pakai">Cara Pakai AR</a>
+    <a href="#toko">Info Toko</a>
+  </div>
+  <p class="footer-copy">© 2025 Mebel Jati Nusantara · Dibuat dengan ❤️ di Solo, Jawa Tengah</p>
+</footer>
+
+<!-- WhatsApp Float -->
+<a href="https://wa.me/628123456789?text=Halo%20Mebel%20Jati%20Nusantara%2C%20saya%20tertarik%20dengan%20produk%20furnitur%20Anda."
+   class="wa-float" target="_blank" rel="noopener" aria-label="Hubungi via WhatsApp">
+  <div class="wa-pulse"></div>
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<!-- Toast -->
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+<!-- ════════════════════════════════════════════════════
+     PRODUCT MODAL
+════════════════════════════════════════════════════ -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModalOutside(event)">
+  <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="mName">
+    <div class="modal-handle"></div>
+    <button class="modal-close" onclick="closeModal()" aria-label="Tutup">✕</button>
+
+    <!-- model-viewer / product visual -->
+    <div class="mv-container" id="mvContainer">
+      <!-- Injected by app.js -->
+    </div>
+    <p class="mv-ar-hint" id="mvHint">Geser model untuk memutar · Ketuk ikon AR untuk mode AR</p>
+
+    <div class="modal-content">
+      <div class="modal-cat"  id="mCat"></div>
+      <h2 class="modal-name"  id="mName"></h2>
+      <div class="modal-price" id="mPrice"></div>
+      <p class="modal-desc"   id="mDesc"></p>
+
+      <div class="specs" id="mSpecs">
+        <!-- Injected by app.js -->
+      </div>
+
+      <!-- AR Section -->
+      <div class="modal-ar-section">
+        <div class="modal-ar-title">📱 Lihat di Ruangan Anda</div>
+        <div class="modal-ar-sub">Tekan tombol di bawah, arahkan kamera ke lantai kosong, lalu gerakkan perlahan untuk menempatkan furnitur.</div>
+        <button class="btn-ar" id="modalArBtn" onclick="launchAR()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+            <path d="M2 17l10 5 10-5"/>
+            <path d="M2 12l10 5 10-5"/>
+          </svg>
+          Lihat di Ruangan Saya
+        </button>
+        <div class="ar-fallback" id="arFallback">
+          <p></p>
+        </div>
+      </div>
+
+      <!-- Share / Copy link -->
+      <div class="modal-share-row">
+        <button class="btn-share" onclick="copyProductLink()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+          Salin Link Produk
+        </button>
+        <button class="btn-share share-native" onclick="shareProduct()" style="display:none;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+          Bagikan
+        </button>
+      </div>
+
+      <!-- QR Section -->
+      <div class="modal-qr-section">
+        <div class="modal-qr-label">🔲 QR Code Produk Ini</div>
+        <div class="modal-qr-body">
+          <img id="productQRImg" src="" alt="QR Code" width="88" height="88" />
+          <div class="modal-qr-info">
+            <p class="modal-qr-sub">Cetak atau bagikan QR ini agar pelanggan bisa langsung membuka produk di katalog.</p>
+            <p class="modal-qr-url" id="productQRUrl"></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- WhatsApp CTA -->
+      <a id="modalWaBtn" href="#" class="btn-wa-modal" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="#fff"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Tanya tentang Produk Ini
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════
+     SCRIPTS (products.js must come before app.js)
+════════════════════════════════════════════════════ -->
+<script src="products.js"></script>
+<script src="app.js"></script>
+
+</body>
+</html>
