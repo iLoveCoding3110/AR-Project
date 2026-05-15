@@ -219,6 +219,11 @@ function closeModalOutside(e) {
 function setupModelViewer(product) {
   const mvc = document.getElementById('mvContainer');
 
+  // Parse dimensions to calculate AR scale (e.g., "75 × 70 × 95 cm" → extract height 95 cm → 0.95m)
+  const dimMatch = product.dimensions.match(/\d+/g);
+  const heightCm = dimMatch ? dimMatch[dimMatch.length - 1] : 100;
+  const arScaleValue = (parseInt(heightCm) / 100).toFixed(2) + "m";
+
   // Inject loading state overlay while model-viewer boots
   mvc.innerHTML = `
     <div class="mv-loading" id="mvLoading">
@@ -232,7 +237,8 @@ function setupModelViewer(product) {
       alt="Model 3D ${product.name}"
       ar
       ar-modes="scene-viewer webxr quick-look"
-      ar-scale="auto"
+      ar-scale="${arScaleValue}"
+      scale="0.5 0.5 0.5"
       camera-controls
       auto-rotate
       auto-rotate-delay="0"
