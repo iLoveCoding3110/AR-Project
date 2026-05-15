@@ -233,7 +233,7 @@ function setupModelViewer(product) {
       ar
       ar-modes="scene-viewer webxr quick-look"
       ar-scale="auto"
-      scale="0.5 0.5 0.5"
+      scale="0.1 0.1 0.1"
       camera-controls
       auto-rotate
       auto-rotate-delay="0"
