@@ -65,6 +65,23 @@ img { max-width: 100%; display: block; }
 .navbar-wa:active { opacity: .85; }
 .navbar-wa svg { width: 16px; height: 16px; fill: #fff; }
 
+.navbar-actions {
+  display: flex; align-items: center; gap: 10px;
+}
+.navbar-ar {
+  background: rgba(201,132,58,.2); color: var(--accent);
+  padding: 8px 14px; border-radius: 50px;
+  font-size: .8rem; font-weight: 700;
+  border: 1px solid rgba(201,132,58,.35);
+  display: flex; align-items: center; gap: 6px;
+  transition: all .2s;
+}
+.navbar-ar:hover {
+  background: rgba(201,132,58,.35);
+  border-color: rgba(201,132,58,.5);
+}
+.navbar-ar:active { opacity: .85; }
+
 /* ─── Hero ──────────────────────────────────────── */
 .hero {
   min-height: 100svh;
@@ -118,6 +135,19 @@ img { max-width: 100%; display: block; }
   transition: background .2s;
 }
 .btn-secondary:active { background: var(--cream2); }
+
+.btn-ar {
+  background: rgba(201,132,58,.15); color: var(--accent);
+  padding: 15px 28px; border-radius: 50px;
+  font-size: 1rem; font-weight: 700;
+  border: 2px solid var(--accent);
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  transition: all .2s;
+}
+.btn-ar:hover {
+  background: rgba(201,132,58,.25);
+}
+.btn-ar:active { background: rgba(201,132,58,.35); transform: scale(.97); }
 
 .hero-visual {
   margin-top: 48px;
