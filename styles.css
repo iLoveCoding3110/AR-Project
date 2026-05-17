@@ -65,23 +65,6 @@ img { max-width: 100%; display: block; }
 .navbar-wa:active { opacity: .85; }
 .navbar-wa svg { width: 16px; height: 16px; fill: #fff; }
 
-.navbar-actions {
-  display: flex; align-items: center; gap: 10px;
-}
-.navbar-ar {
-  background: rgba(201,132,58,.2); color: var(--accent);
-  padding: 8px 14px; border-radius: 50px;
-  font-size: .8rem; font-weight: 700;
-  border: 1px solid rgba(201,132,58,.35);
-  display: flex; align-items: center; gap: 6px;
-  transition: all .2s;
-}
-.navbar-ar:hover {
-  background: rgba(201,132,58,.35);
-  border-color: rgba(201,132,58,.5);
-}
-.navbar-ar:active { opacity: .85; }
-
 /* ─── Hero ──────────────────────────────────────── */
 .hero {
   min-height: 100svh;
