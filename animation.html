@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AR Animasi – Mebel Jati Nusantara</title>
+  <meta name="description" content="Arahkan kamera ke poster toko untuk melihat animasi AR." />
+
+  <!-- A-Frame -->
+  <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
+  <!-- MindAR Image Tracking -->
+  <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.2/dist/mindar-image-aframe.prod.js"></script>
+  <!-- A-Frame Extras (animation-mixer) -->
+  <script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-extras@7.0.0/dist/aframe-extras.min.js"></script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --brown-d: #3b2a1a;
+      --brown-m: #7c5c3e;
+      --accent:  #c9843a;
+      --cream:   #f9f5ef;
+      --white:   #ffffff;
+      --font:    'Segoe UI', system-ui, sans-serif;
+    }
+
+    body { background: #000; overflow: hidden; font-family: var(--font); }
+
+    /* ── Loading Screen ─────────────────────────── */
+    #loading-screen {
+      position: fixed; inset: 0; z-index: 100;
+      background: var(--brown-d);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 20px; text-align: center; padding: 32px;
+    }
+    #loading-screen.hidden { display: none; }
+
+    .loading-logo {
+      font-size: 1.05rem; font-weight: 700; color: var(--white);
+      letter-spacing: .04em;
+    }
+    .loading-logo span {
+      display: block; font-size: .65rem; font-weight: 400;
+      color: rgba(255,255,255,.5); letter-spacing: .1em;
+      text-transform: uppercase; margin-top: 4px;
+    }
+    .loading-spinner {
+      width: 44px; height: 44px; border-radius: 50%;
+      border: 3px solid rgba(255,255,255,.2);
+      border-top-color: var(--accent);
+      animation: spin .9s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .loading-text { font-size: .9rem; color: rgba(255,255,255,.6); line-height: 1.6; }
+    .loading-text strong { color: var(--accent); }
+
+    /* ── Top Bar ────────────────────────────────── */
+    #top-bar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 12px 16px;
+      background: linear-gradient(to bottom, rgba(0,0,0,.65) 0%, transparent 100%);
+      pointer-events: none;
+    }
+    #top-bar a {
+      pointer-events: all;
+      background: rgba(255,255,255,.15);
+      backdrop-filter: blur(8px);
+      color: #fff; border-radius: 50px;
+      padding: 8px 16px; font-size: .82rem; font-weight: 700;
+      text-decoration: none; display: flex; align-items: center; gap: 6px;
+      border: 1px solid rgba(255,255,255,.2);
+    }
+    .brand-label {
+      font-size: .78rem; font-weight: 700; color: rgba(255,255,255,.85);
+      letter-spacing: .04em; text-align: right; line-height: 1.3;
+    }
+    .brand-label span {
+      display: block; font-size: .6rem; font-weight: 400;
+      color: rgba(255,255,255,.5); text-transform: uppercase; letter-spacing: .08em;
+    }
+
+    /* ── Bottom Hint ────────────────────────────── */
+    #hint-bar {
+      position: fixed; bottom: 0; left: 0; right: 0; z-index: 50;
+      padding: 16px 20px 28px;
+      background: linear-gradient(to top, rgba(0,0,0,.7) 0%, transparent 100%);
+      text-align: center;
+    }
+    .hint-pill {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(255,255,255,.12);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,.2);
+      border-radius: 50px; padding: 10px 20px;
+      color: #fff; font-size: .85rem; font-weight: 600;
+    }
+    .hint-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--accent);
+      animation: pulse 2s infinite;
+      flex-shrink: 0;
+    }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(1.4)} }
+
+    /* ── Found Banner ───────────────────────────── */
+    #found-banner {
+      position: fixed; top: 70px; left: 50%; transform: translateX(-50%);
+      z-index: 50;
+      background: var(--accent); color: #fff;
+      border-radius: 50px; padding: 8px 20px;
+      font-size: .82rem; font-weight: 700;
+      opacity: 0; transition: opacity .4s;
+      pointer-events: none; white-space: nowrap;
+    }
+    #found-banner.show { opacity: 1; }
+
+    /* A-Frame canvas fills viewport */
+    a-scene { position: fixed; inset: 0; }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════
+     LOADING SCREEN
+══════════════════════════════════════════════ -->
+<div id="loading-screen">
+  <div class="loading-logo">
+    Mebel Jati Nusantara
+    <span>WebAR Experience</span>
+  </div>
+  <div class="loading-spinner"></div>
+  <p class="loading-text">
+    Memuat pengalaman AR…<br>
+    <strong>Izinkan akses kamera</strong> saat diminta.
+  </p>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     TOP BAR
+══════════════════════════════════════════════ -->
+<div id="top-bar">
+  <a href="index.html">← Katalog</a>
+  <div class="brand-label">
+    AR Animasi
+    <span>Mebel Jati Nusantara</span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     HINT (bottom)
+══════════════════════════════════════════════ -->
+<div id="hint-bar">
+  <div class="hint-pill">
+    <span class="hint-dot"></span>
+    Arahkan kamera ke poster / marker toko
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     FOUND BANNER
+══════════════════════════════════════════════ -->
+<div id="found-banner">🎉 Marker ditemukan!</div>
+
+<!-- ══════════════════════════════════════════════
+     A-FRAME / MINDAR SCENE
+══════════════════════════════════════════════ -->
+<a-scene
+  mindar-image="imageTargetSrc: ./targets.mind; autoStart: true; uiLoading: no; uiError: no; uiScanning: no;"
+  color-space="sRGB"
+  renderer="colorManagement: true; physicallyCorrectLights: true;"
+  vr-mode-ui="enabled: false"
+  device-orientation-permission-ui="enabled: false">
+
+  <a-assets>
+    <a-asset-item id="kidModel" src="./models/kid.glb" response-type="arraybuffer"></a-asset-item>
+  </a-assets>
+
+  <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
+
+  <!-- Target 0 = targets.mind index 0 (your first/only image) -->
+  <a-entity mindar-image-target="targetIndex: 0">
+    <a-gltf-model
+      id="kidEntity"
+      src="#kidModel"
+      position="0 0 0"
+      rotation="-90 0 0"
+      scale="0.25 0.25 0.25"
+      animation-mixer="clip: *; loop: repeat; timeScale: 1"
+      visible="true">
+    </a-gltf-model>
+  </a-entity>
+
+</a-scene>
+
+<!-- ══════════════════════════════════════════════
+     JAVASCRIPT
+══════════════════════════════════════════════ -->
+<script>
+  const loadingScreen = document.getElementById('loading-screen');
+  const foundBanner   = document.getElementById('found-banner');
+  const hintBar       = document.getElementById('hint-bar');
+
+  // Hide loading screen once A-Frame scene is ready
+  const scene = document.querySelector('a-scene');
+  scene.addEventListener('loaded', () => {
+    setTimeout(() => loadingScreen.classList.add('hidden'), 800);
+  });
+
+  // Show found banner when marker is detected
+  const target = document.querySelector('[mindar-image-target]');
+
+  target.addEventListener('targetFound', () => {
+    foundBanner.classList.add('show');
+    hintBar.style.opacity = '0';
+    // Hide banner after 2.5s
+    setTimeout(() => foundBanner.classList.remove('show'), 2500);
+  });
+
+  target.addEventListener('targetLost', () => {
+    hintBar.style.opacity = '1';
+  });
+
+  // Fallback: hide loading after 8s even if scene is slow
+  setTimeout(() => loadingScreen.classList.add('hidden'), 8000);
+</script>
+</body>
+</html>
